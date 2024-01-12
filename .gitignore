@@ -1,0 +1,4 @@
+env
+db.sqlite3
+news/__pycache__
+main/__pycache__

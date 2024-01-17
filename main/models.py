@@ -11,21 +11,28 @@ class Region(models.Model):
 
     def __str__(self):
         return self.name
+
     
-class Form(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(max_length=100, unique=True)
+class Item(models.Model):
+    title = models.CharField(max_length=255)
     body = models.TextField()
-    is_checked = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='items/')
 
     def __str__(self):
-        return self.name
-    
-class Material(models.Model):
-    title = models.CharField(max_length = 255)
-    text = models.TextField()
-    author = models.CharField(max_length = 255)
-    media  = models.ImageField()
-    published = models.DateTimeField(auto_now_add = True)
-    is_avctive = models.BooleanField(default = False)
+        return self.title
 
+class Form(models.Model):
+    body = models.TextField()
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    is_checked = models.BooleanField(default=False)
+    status = models.CharField(max_length = 1, default = '0')
+    sent_time = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self) -> str:
+        return self.email
+    

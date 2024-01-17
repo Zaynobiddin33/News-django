@@ -60,7 +60,7 @@ def create_region(request):
 
 
 def regions(request):
-    regions = models.Region.objects.all()
+    regions = models.Region.objects.all().order_by('name')
     return render(request, 'dashboard/region/list.html', {'regions':regions})
 
 
@@ -151,6 +151,7 @@ def update_item(request, id):
         if image:
             item.image = image
         item.save() 
+        return redirect('items')
     context = {
         "item" : item,
         "categories": models.Category.objects.all(),
